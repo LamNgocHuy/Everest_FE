@@ -10,7 +10,7 @@
                   <div class="valid-feedback">Your email is valid!</div>
                   <div class="invalid-feedback">
                     <span v-if="!$v.email.required">Email is required.</span>
-                    <span v-if="!$v.email.isUnique">This email is already registered.</span>
+                    <span v-if="!$v.email.isUnique">This email is invalid</span>
                   </div>
               </div>
               <div class="form-group">
