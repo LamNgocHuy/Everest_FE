@@ -7,30 +7,17 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
     state: {
-        auth: {
-            isAuthenticated: true
-        },
-        accountLogin: {
+        userInfo: {
             email: '',
-            password: ''
         },
         token: null,
         users: []
     },
     mutations: {
-        CHECK_ACCOUNT_INCORRECT(state) {
-            state.auth.isAuthenticated = false
+        get_email(state, data) {
+            state.userInfo.email = data
         },
-        CHECK_ACCOUNT_CORRECT(state) {
-            state.auth.isAuthenticated = true
-        },
-        GET_TOKEN(state, token) {
-            state.token = token
-        },
-        GET_EMAIL(state, email) {
-            state.accountLogin.email = email
-        },
-        GET_ALL_USERS(state, data) {
+        get_all_users(state, data) {
             state.users = data
         }
     },
@@ -38,12 +25,10 @@ const store = new Vuex.Store({
         async login({commit}, accountLogin) {
             try {
                 var jsonRes = await auth.login(accountLogin)
-                commit('GET_TOKEN', jsonRes.data.token)
-                commit('GET_EMAIL', jsonRes.data.email)
+                commit('get_email', jsonRes.data.email)
+                localStorage.setItem('token', jsonRes.data.token)
                 router.push('/chat')
-                commit('CHECK_ACCOUNT_CORRECT')
             } catch (error) {
-                commit('CHECK_ACCOUNT_INCORRECT')
                 console.log(error)
                 alert('Incorrect account. Try again.')
                 router.push('')
@@ -52,17 +37,15 @@ const store = new Vuex.Store({
         async getAllUsers({commit}) {
             try {
                 var jsonRes = await auth.getAllUsers()
-                console.log(jsonRes)
-                commit('GET_ALL_USERS', jsonRes.data)
-                console.log(this.state.users)
+                commit('get_all_users', jsonRes.data)
             } catch (error) {
                 console.log(error)
             }
         },
-        async sendMessage() {
+        async sendMessage(req) {
             try {
-                var jsonRes = await auth.sendMessage()
-                console.log(jsonRes)
+                var jsonRes = await auth.sendMessage(req)
+                console.log('response' + jsonRes.data)
             } catch (error) {
                 console.log(error)
             }

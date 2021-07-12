@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-4 me-auto members">
-                <div v-for="user in users" :key="user.userId" class="d-flex align-items-center user-info">
+                <div v-for="user in this.$store.state.users" :key="user.id" class="d-flex align-items-center user-info">
                     <div class="flex-shrink-0">
                         <img v-bind:src="user.pictureURL" alt="..." width="50px" height="50px">
                     </div>
@@ -11,7 +11,7 @@
                     </div>
                     <div class="align-self-center ml-auto">
                         <div class="custom-control custom-checkbox">
-                            <input class="custom-control-input" id="id-user-1" type="checkbox" @click="createUsersNeedSend(user.userId)">
+                            <input class="custom-control-input" id="id-user-1" type="checkbox" :value="user.userId" v-model="receiver" >
                             <label class="custom-control-label" for="id-user-1"></label>
                         </div>
                     </div>
@@ -34,62 +34,25 @@ export default {
     name: 'Chat',
     data() {
         return {
-            email: this.$store.state.accountLogin.email,
-            users: [],
-            // users: [
-            //     {
-            //         userId: '1',
-            //         displayName: 'Ngoc Huy',
-            //         pictureURL: 'https://offsetcode.com/themes/messenger/1.1/assets/images/avatars/6.jpg'
-            //     },
-            //     {
-            //         userId: '2',
-            //         displayName: 'Van Tu',
-            //         pictureURL: 'https://offsetcode.com/themes/messenger/1.1/assets/images/avatars/6.jpg'
-            //     },
-            //     {
-            //         userId: '3',
-            //         displayName: 'Nguyen Van A',
-            //         pictureURL: 'https://offsetcode.com/themes/messenger/1.1/assets/images/avatars/5.jpg'
-            //     },
-            //     {
-            //         userId: '4',
-            //         displayName: 'Nguyen Van B',
-            //         pictureURL: 'https://offsetcode.com/themes/messenger/1.1/assets/images/avatars/10.jpg'
-            //     },
-            //     {
-            //         userId: '5',
-            //         displayName: 'Nguyen Van C',
-            //         pictureURL: 'https://offsetcode.com/themes/messenger/1.1/assets/images/avatars/6.jpg'
-            //     },
-            //     {
-            //         userId: '6',
-            //         displayName: 'Nguyen Van C',
-            //         pictureURL: 'https://offsetcode.com/themes/messenger/1.1/assets/images/avatars/6.jpg'
-            //     },
-            //     {
-            //         userId: '7',
-            //         displayName: 'Nguyen Van C',
-            //         pictureURL: 'https://offsetcode.com/themes/messenger/1.1/assets/images/avatars/6.jpg'
-            //     },
-            // ],
-            messenger: {
-                to: ["U994352f23562e3948949339e508a1346","Uf2c484b670df3686c0d65b5b66e28388","U1bc9da31c1a694b15272205ab17c5458"],
-                messages: [
-                    {
-                        type: 'text',
-                        text: 'Are you stupid rich man ?'
-                    }
-                ]
-            },
-            UNeedSend: []
+            email: this.$store.state.userInfo.email,
+            // messenger: {
+            //     to: this.receiver,
+            //     messages: [
+            //         {
+            //             type: "text",
+            //             text: "Are you stupid rich man ?"
+            //         }
+            //     ]
+            // },
+            receiver: []
         }
     },
-    watch: {
-        getAllUser: {
-            handler: 'getAllUsers',
-            immediate: true
+    mounted() {
+        let token = localStorage.getItem('token')
+        if (!token) {
+            this.$router.push({name: 'login'})
         }
+        this.$store.dispatch('getAllUsers')
     },
     methods: {
         toggleMessage() {
@@ -97,14 +60,17 @@ export default {
                 document.getElementById('message').value = '';
             }
         },
-        createUsersNeedSend(userId) {
-            this.UNeedSend.push(userId)
-        },
-        getAllUsers() {
-            this.$store.dispatch('getAllUsers')
-        },
         sendMessage() {
-            this.$store.dispatch('sendMessage', this.messenger)
+            console.log(this.receiver)
+            this.$store.dispatch('sendMessage', {
+                to: this.receiver,
+                messages: [
+                    {
+                        type: "text",
+                        text: "Are you stupid rich man ?"
+                    }
+                ]
+            });
         }
     }
 }

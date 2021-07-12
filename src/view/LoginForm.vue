@@ -70,11 +70,10 @@ export default {
     submit() {
       this.$v.$touch()
       if (!this.$v.$invalid) {
-        var accountLogin = {
+        this.$store.dispatch("login", {
           email: this.email,
           password: this.password
-        }
-        this.$store.dispatch("login", accountLogin)
+        })
       }
     },
   }
