@@ -62,7 +62,7 @@ export default {
         },
         sendMessage() {
             console.log(this.receiver)
-            this.$store.dispatch('sendMessage', {
+            this.$store.dispatch("sendMessage",{
                 to: this.receiver,
                 messages: [
                     {

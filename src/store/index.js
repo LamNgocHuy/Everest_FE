@@ -42,9 +42,11 @@ const store = new Vuex.Store({
                 console.log(error)
             }
         },
-        async sendMessage(req) {
+        async sendMessage({commit},req) {
+            console.log('sss'+req);
             try {
                 var jsonRes = await auth.sendMessage(req)
+                commit('get_email', 'abc@gmail.com')
                 console.log('response' + jsonRes.data)
             } catch (error) {
                 console.log(error)
