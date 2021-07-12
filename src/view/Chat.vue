@@ -20,7 +20,7 @@
             <div class="col-8 chat">
                 <textarea class="form-control message" id="message"></textarea>
                 <div class="d-flex flex-row">
-                    <button class="btn btn-primary mt-4 me-3">Send Message</button>
+                    <button class="btn btn-primary mt-4 me-3" @click="sendMessage">Send Message</button>
                     <button class="btn btn-danger mt-4" @click="toggleMessage" onClick="return confirm(Are you sure?)">Reset Message</button>
                 </div>
             </div>
@@ -35,46 +35,60 @@ export default {
     data() {
         return {
             email: this.$store.state.accountLogin.email,
-            // users: this.$store.dispatch("getAllUsers")
-            users: [
-                {
-                    userId: '1',
-                    displayName: 'Ngoc Huy',
-                    pictureURL: 'https://offsetcode.com/themes/messenger/1.1/assets/images/avatars/6.jpg'
-                },
-                {
-                    userId: '2',
-                    displayName: 'Van Tu',
-                    pictureURL: 'https://offsetcode.com/themes/messenger/1.1/assets/images/avatars/6.jpg'
-                },
-                {
-                    userId: '3',
-                    displayName: 'Nguyen Van A',
-                    pictureURL: 'https://offsetcode.com/themes/messenger/1.1/assets/images/avatars/5.jpg'
-                },
-                {
-                    userId: '4',
-                    displayName: 'Nguyen Van B',
-                    pictureURL: 'https://offsetcode.com/themes/messenger/1.1/assets/images/avatars/10.jpg'
-                },
-                {
-                    userId: '5',
-                    displayName: 'Nguyen Van C',
-                    pictureURL: 'https://offsetcode.com/themes/messenger/1.1/assets/images/avatars/6.jpg'
-                },
-                {
-                    userId: '6',
-                    displayName: 'Nguyen Van C',
-                    pictureURL: 'https://offsetcode.com/themes/messenger/1.1/assets/images/avatars/6.jpg'
-                },
-                {
-                    userId: '7',
-                    displayName: 'Nguyen Van C',
-                    pictureURL: 'https://offsetcode.com/themes/messenger/1.1/assets/images/avatars/6.jpg'
-                },
-            ],
-            messenger: '',
+            users: [],
+            // users: [
+            //     {
+            //         userId: '1',
+            //         displayName: 'Ngoc Huy',
+            //         pictureURL: 'https://offsetcode.com/themes/messenger/1.1/assets/images/avatars/6.jpg'
+            //     },
+            //     {
+            //         userId: '2',
+            //         displayName: 'Van Tu',
+            //         pictureURL: 'https://offsetcode.com/themes/messenger/1.1/assets/images/avatars/6.jpg'
+            //     },
+            //     {
+            //         userId: '3',
+            //         displayName: 'Nguyen Van A',
+            //         pictureURL: 'https://offsetcode.com/themes/messenger/1.1/assets/images/avatars/5.jpg'
+            //     },
+            //     {
+            //         userId: '4',
+            //         displayName: 'Nguyen Van B',
+            //         pictureURL: 'https://offsetcode.com/themes/messenger/1.1/assets/images/avatars/10.jpg'
+            //     },
+            //     {
+            //         userId: '5',
+            //         displayName: 'Nguyen Van C',
+            //         pictureURL: 'https://offsetcode.com/themes/messenger/1.1/assets/images/avatars/6.jpg'
+            //     },
+            //     {
+            //         userId: '6',
+            //         displayName: 'Nguyen Van C',
+            //         pictureURL: 'https://offsetcode.com/themes/messenger/1.1/assets/images/avatars/6.jpg'
+            //     },
+            //     {
+            //         userId: '7',
+            //         displayName: 'Nguyen Van C',
+            //         pictureURL: 'https://offsetcode.com/themes/messenger/1.1/assets/images/avatars/6.jpg'
+            //     },
+            // ],
+            messenger: {
+                to: ["U994352f23562e3948949339e508a1346","Uf2c484b670df3686c0d65b5b66e28388","U1bc9da31c1a694b15272205ab17c5458"],
+                messages: [
+                    {
+                        type: 'text',
+                        text: 'Are you stupid rich man ?'
+                    }
+                ]
+            },
             UNeedSend: []
+        }
+    },
+    watch: {
+        getAllUser: {
+            handler: 'getAllUsers',
+            immediate: true
         }
     },
     methods: {
@@ -86,6 +100,12 @@ export default {
         createUsersNeedSend(userId) {
             this.UNeedSend.push(userId)
         },
+        getAllUsers() {
+            this.$store.dispatch('getAllUsers')
+        },
+        sendMessage() {
+            this.$store.dispatch('sendMessage', this.messenger)
+        }
     }
 }
 </script>

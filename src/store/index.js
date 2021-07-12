@@ -30,8 +30,8 @@ const store = new Vuex.Store({
         GET_EMAIL(state, email) {
             state.accountLogin.email = email
         },
-        GET_ALL_USERS(state, users) {
-            state.users = users
+        GET_ALL_USERS(state, data) {
+            state.users = data
         }
     },
     actions: {
@@ -53,8 +53,16 @@ const store = new Vuex.Store({
             try {
                 var jsonRes = await auth.getAllUsers()
                 console.log(jsonRes)
-                commit('GET_ALL_USERS')
+                commit('GET_ALL_USERS', jsonRes.data)
                 console.log(this.state.users)
+            } catch (error) {
+                console.log(error)
+            }
+        },
+        async sendMessage() {
+            try {
+                var jsonRes = await auth.sendMessage()
+                console.log(jsonRes)
             } catch (error) {
                 console.log(error)
             }

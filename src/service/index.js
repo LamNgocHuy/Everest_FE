@@ -9,5 +9,11 @@ export default {
                 .then(function(response){
                     return response
                 });
+    },
+    sendMessage(messenger) {
+        return axios.post('https://line-sender.herokuapp.com/line-messages', messenger)
+                .then(function(response){
+                    return response
+                })
     }
 }
