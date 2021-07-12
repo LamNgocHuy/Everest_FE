@@ -38,14 +38,15 @@ const store = new Vuex.Store({
         async login({commit}, accountLogin) {
             try {
                 var jsonRes = await auth.login(accountLogin)
-                console.log(jsonRes)
                 commit('GET_TOKEN', jsonRes.data.token)
-                commit('GET_EMAIL', jsonRes.data.email) 
+                commit('GET_EMAIL', jsonRes.data.email)
                 router.push('/chat')
                 commit('CHECK_ACCOUNT_CORRECT')
             } catch (error) {
                 commit('CHECK_ACCOUNT_INCORRECT')
                 console.log(error)
+                alert('Incorrect account. Try again.')
+                router.push('')
             }
         },
         async getAllUsers({commit}) {
