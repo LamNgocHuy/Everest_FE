@@ -18,7 +18,7 @@
                 </div>
             </div>
             <div class="col-8 chat">
-                <textarea class="form-control message" id="message"></textarea>
+                <textarea class="form-control message" id="message" v-model="message"></textarea>
                 <div class="d-flex flex-row">
                     <button class="btn btn-primary mt-4 me-3" @click="sendMessage">Send Message</button>
                     <button class="btn btn-danger mt-4" @click="toggleMessage" onClick="return confirm(Are you sure?)">Reset Message</button>
@@ -35,19 +35,11 @@ export default {
     data() {
         return {
             email: this.$store.state.userInfo.email,
-            // messenger: {
-            //     to: this.receiver,
-            //     messages: [
-            //         {
-            //             type: "text",
-            //             text: "Are you stupid rich man ?"
-            //         }
-            //     ]
-            // },
+            message: '',
             receiver: []
         }
     },
-    mounted() {
+    beforeCreate() {
         let token = localStorage.getItem('token')
         if (!token) {
             this.$router.push({name: 'login'})
@@ -67,7 +59,7 @@ export default {
                 messages: [
                     {
                         type: "text",
-                        text: "Are you stupid rich man ?"
+                        text: this.message
                     }
                 ]
             });

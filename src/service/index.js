@@ -16,7 +16,6 @@ export default {
     sendMessage(req) {
         return axios.post('https://line-sender.herokuapp.com/line-messages', req)
                 .then(function(response){
-                    console.log(req)
                     return response
                 })
     }

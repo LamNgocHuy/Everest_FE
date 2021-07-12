@@ -160,7 +160,7 @@ outline: 0 none;
 }
 
 .form-submit:hover {
-    background-color: #7ec2df;
+    background-color: #5d94ac;
 }
 
 .spacer {

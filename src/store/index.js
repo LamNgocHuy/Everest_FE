@@ -10,7 +10,6 @@ const store = new Vuex.Store({
         userInfo: {
             email: '',
         },
-        token: null,
         users: []
     },
     mutations: {
@@ -31,7 +30,6 @@ const store = new Vuex.Store({
             } catch (error) {
                 console.log(error)
                 alert('Incorrect account. Try again.')
-                router.push('')
             }
         },
         async getAllUsers({commit}) {
@@ -43,11 +41,10 @@ const store = new Vuex.Store({
             }
         },
         async sendMessage({commit},req) {
-            console.log('sss'+req);
             try {
                 var jsonRes = await auth.sendMessage(req)
-                commit('get_email', 'abc@gmail.com')
-                console.log('response' + jsonRes.data)
+                console.log(jsonRes.data)
+                commit('get_email', 'dactechgoteam@gmail.com')
             } catch (error) {
                 console.log(error)
             }
