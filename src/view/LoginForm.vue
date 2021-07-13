@@ -22,7 +22,7 @@
                     <span v-if="!$v.password.minLength">{{ $v.password.$params.minLength.min  }} characters minimun.</span>
                   </div>
               </div>
-              <button type="submit" class="form-submit" id="submit" >Login</button>
+              <button type="submit" class="form-submit" id="submit" :disabled="this.$store.state.isLoading" >Login</button>
           </form>
           <div class="d-flex flex-row mt-2">
               <button class="btn-fb me-3">Facebook</button>
@@ -149,6 +149,9 @@ outline: 0 none;
     font-size: 14px;
     border-radius: 5px;
     cursor: pointer;
+    &:disabled {
+      background-color: #6B7A8F !important;
+    }
 }
 
 .btn-fb {

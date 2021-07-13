@@ -1,12 +1,20 @@
 <template>
   <div id="app">
     <router-view/>
+    <div v-if="this.$store.state.isLoading">
+     <Spinner/>
+    </div>
   </div>
 </template>
 
 <script>
+import Spinner from './components/Spinner.vue'
+
 export default {
   name: 'App',
+  components: {
+    Spinner
+  }
 }
 </script>
 
@@ -26,4 +34,5 @@ body {
   background-color: $bgBody !important;
   min-width: 375px;
 }
+
 </style>

@@ -10,7 +10,9 @@ const store = new Vuex.Store({
         userInfo: {
             email: '',
         },
-        users: []
+        users: [],
+        isLoading: false,
+        // isSuccess: false
     },
     mutations: {
         get_email(state, data) {
@@ -18,14 +20,19 @@ const store = new Vuex.Store({
         },
         get_all_users(state, data) {
             state.users = data
+        },
+        change_isLoading(state) {
+            state.isLoading = !state.isLoading
         }
     },
     actions: {
         async login({commit}, accountLogin) {
             try {
+                commit('change_isLoading')
                 var jsonRes = await auth.login(accountLogin)
                 commit('get_email', jsonRes.data.email)
                 localStorage.setItem('token', jsonRes.data.token)
+                commit('change_isLoading')
                 router.push('/chat')
             } catch (error) {
                 console.log(error)
